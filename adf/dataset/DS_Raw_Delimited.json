@@ -1,0 +1,43 @@
+{
+  "name": "DS_Raw_Delimited",
+  "properties": {
+    "description": "Raw CSV landing path consumed by Auto Loader: landing/batch_date=yyyy-MM-dd/entity.csv",
+    "linkedServiceName": {
+      "referenceName": "LS_ADLS_Gen2",
+      "type": "LinkedServiceReference",
+      "parameters": {
+        "storageAccount": {
+          "value": "@dataset().storageAccount",
+          "type": "Expression"
+        }
+      }
+    },
+    "parameters": {
+      "storageAccount": { "type": "String" },
+      "container": { "type": "String" },
+      "batchDate": { "type": "String" },
+      "entity": { "type": "String" }
+    },
+    "type": "DelimitedText",
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileName": {
+          "value": "@concat(dataset().entity, '.csv')",
+          "type": "Expression"
+        },
+        "folderPath": {
+          "value": "@concat('batch_date=', dataset().batchDate)",
+          "type": "Expression"
+        },
+        "fileSystem": {
+          "value": "@dataset().container",
+          "type": "Expression"
+        }
+      },
+      "columnDelimiter": ",",
+      "firstRowAsHeader": true
+    },
+    "schema": []
+  }
+}

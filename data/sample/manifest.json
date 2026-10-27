@@ -1,0 +1,179 @@
+{
+  "scale": "small",
+  "seed": 42,
+  "batches": [
+    {
+      "batch_date": "2024-06-03",
+      "schema_extra_columns": {},
+      "file_rows": {
+        "members": 240,
+        "providers": 24,
+        "pharmacies": 10,
+        "drugs": 20,
+        "drug_pricing": 55,
+        "prescriptions": 70,
+        "medical_claims": 96,
+        "pharmacy_claims": 70,
+        "remittances": 128
+      },
+      "scd2_attribute_changes": {
+        "providers": 0,
+        "pharmacies": 0,
+        "drug_pricing": 0
+      },
+      "late_arrivals": 0,
+      "duplicate_claim_rows": 0,
+      "adjustments": 0,
+      "reversals": 0,
+      "stale_versions": 0,
+      "intentional_dq_rows": {},
+      "corrupt_rows": {
+        "medical_claims": 0,
+        "pharmacy_claims": 0
+      }
+    },
+    {
+      "batch_date": "2024-06-04",
+      "schema_extra_columns": {},
+      "file_rows": {
+        "members": 242,
+        "providers": 24,
+        "pharmacies": 10,
+        "drugs": 20,
+        "drug_pricing": 55,
+        "prescriptions": 70,
+        "medical_claims": 96,
+        "pharmacy_claims": 70,
+        "remittances": 128
+      },
+      "scd2_attribute_changes": {
+        "providers": 2,
+        "pharmacies": 1,
+        "drug_pricing": 1
+      },
+      "late_arrivals": 0,
+      "duplicate_claim_rows": 0,
+      "adjustments": 0,
+      "reversals": 0,
+      "stale_versions": 0,
+      "intentional_dq_rows": {},
+      "corrupt_rows": {
+        "medical_claims": 0,
+        "pharmacy_claims": 0
+      }
+    },
+    {
+      "batch_date": "2024-06-05",
+      "schema_extra_columns": {},
+      "file_rows": {
+        "members": 243,
+        "providers": 26,
+        "pharmacies": 11,
+        "drugs": 21,
+        "drug_pricing": 56,
+        "prescriptions": 71,
+        "medical_claims": 112,
+        "pharmacy_claims": 80,
+        "remittances": 134
+      },
+      "scd2_attribute_changes": {
+        "providers": 0,
+        "pharmacies": 0,
+        "drug_pricing": 0
+      },
+      "late_arrivals": 3,
+      "duplicate_claim_rows": 2,
+      "adjustments": 3,
+      "reversals": 0,
+      "stale_versions": 0,
+      "intentional_dq_rows": {
+        "medical_claims": 10,
+        "pharmacy_claims": 7,
+        "providers": 2,
+        "pharmacies": 1,
+        "drugs": 1,
+        "drug_pricing": 1,
+        "members": 1
+      },
+      "corrupt_rows": {
+        "medical_claims": 1,
+        "pharmacy_claims": 1
+      }
+    },
+    {
+      "batch_date": "2024-06-06",
+      "schema_extra_columns": {
+        "medical_claims": [
+          "prior_auth_number"
+        ],
+        "pharmacy_claims": [
+          "prior_auth_number"
+        ]
+      },
+      "file_rows": {
+        "members": 242,
+        "providers": 24,
+        "pharmacies": 10,
+        "drugs": 20,
+        "drug_pricing": 55,
+        "prescriptions": 70,
+        "medical_claims": 98,
+        "pharmacy_claims": 70,
+        "remittances": 131
+      },
+      "scd2_attribute_changes": {
+        "providers": 1,
+        "pharmacies": 0,
+        "drug_pricing": 1
+      },
+      "late_arrivals": 0,
+      "duplicate_claim_rows": 0,
+      "adjustments": 0,
+      "reversals": 1,
+      "stale_versions": 1,
+      "intentional_dq_rows": {},
+      "corrupt_rows": {
+        "medical_claims": 0,
+        "pharmacy_claims": 0
+      }
+    }
+  ],
+  "examples": {
+    "changed_provider_npi": "1764480624",
+    "changed_provider_specialty_from": "Family Medicine",
+    "changed_provider_specialty_to": "Internal Medicine",
+    "network_provider_npi": "1597777519",
+    "network_from": "IN",
+    "network_to": "OUT",
+    "changed_pharmacy_npi": "1049147279",
+    "changed_pharmacy_tier_from": "Preferred",
+    "changed_pharmacy_tier_to": "Standard",
+    "changed_ndc": "00069015001",
+    "changed_price_type": "MAC",
+    "changed_price_from": "0.2300",
+    "changed_price_to": "0.2400",
+    "adjusted_claim_id": "MC2024060300003",
+    "adjusted_paid": "213.60",
+    "adjusted_original_paid": "185.74",
+    "stale_claim_id": "MC2024060300004",
+    "reversed_claim_id": "MC2024060300005",
+    "duplicate_pharmacy_claim_id": "PC2024060300001",
+    "suspended_provider_npi": "2453197644"
+  },
+  "intentional_dq_rows": {
+    "2024-06-05": {
+      "medical_claims": 10,
+      "pharmacy_claims": 7,
+      "providers": 2,
+      "pharmacies": 1,
+      "drugs": 1,
+      "drug_pricing": 1,
+      "members": 1
+    }
+  },
+  "notes": {
+    "phi": "synthetic",
+    "schema_change_batch": "2024-06-06",
+    "schema_change_column": "prior_auth_number"
+  }
+}

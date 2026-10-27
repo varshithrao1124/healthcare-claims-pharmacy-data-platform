@@ -1,0 +1,37 @@
+# Developer environment.
+# Defaults to the local filesystem so `make pipeline` works on a laptop.
+# Set HC_STORAGE_MODE=adls and HC_CATALOG_MODE=unity to target Azure dev.
+environment: dev
+storage:
+  mode: ${HC_STORAGE_MODE:-local}
+  local_root: ${HC_LOCAL_ROOT:-data/lake}
+  landing: ${HC_LANDING:-data/sample}
+  adls_uri: ${HC_ADLS_URI:-abfss://claims@sthcclaimsdev.dfs.core.windows.net/lake}
+  landing_adls: ${HC_LANDING_ADLS:-abfss://claims@sthcclaimsdev.dfs.core.windows.net/landing}
+catalog:
+  mode: ${HC_CATALOG_MODE:-local}
+  name: ${HC_CATALOG_NAME:-healthcare_dev}
+  bronze_schema: bronze
+  silver_schema: silver
+  gold_schema: gold
+  audit_schema: audit
+spark:
+  app_name: hc-claims-dev
+  master: local[2]
+  shuffle_partitions: 4
+  driver_memory: 2g
+pipeline:
+  name: hc_medallion
+  amount_tolerance: "0.01"
+  dq_fail_rate_alert_threshold: 0.05
+  retry_attempts: 3
+  retry_backoff_seconds: 0.5
+  scd2_epoch: "2020-01-01"
+  brand_awp_discount: "0.16"
+alerts:
+  webhook_url: ${ALERT_WEBHOOK_URL:-}
+secrets:
+  mode: ${HC_SECRET_MODE:-env}
+  scope: hc-kv-dev
+logging:
+  dir: ${HC_LOG_DIR:-data/logs}

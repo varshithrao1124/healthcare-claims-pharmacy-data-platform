@@ -1,0 +1,109 @@
+# Databricks Asset Bundle for the claims medallion job.
+# Deploy (when a workspace is configured):
+#   databricks bundle validate -t dev
+#   databricks bundle deploy -t dev
+# CD runs those commands only when DATABRICKS_HOST and DATABRICKS_TOKEN exist.
+
+bundle:
+  name: healthcare-claims-pharmacy
+
+variables:
+  environment:
+    description: conf/*.yml environment name
+    default: dev
+  catalog:
+    description: Unity Catalog name
+    default: healthcare_dev
+  secret_scope:
+    description: Key Vault-backed secret scope
+    default: hc-kv-dev
+  pause_status:
+    description: UNPAUSED or PAUSED
+    default: PAUSED
+  alert_email:
+    description: Failure notification recipient
+    default: data-engineering@example.com
+
+targets:
+  dev:
+    default: true
+    mode: production
+    workspace:
+      host: ${workspace.host}
+    variables:
+      environment: dev
+      catalog: healthcare_dev
+      secret_scope: hc-kv-dev
+      pause_status: UNPAUSED
+  prod:
+    mode: production
+    workspace:
+      host: ${workspace.host}
+    variables:
+      environment: prod
+      catalog: healthcare_prod
+      secret_scope: hc-kv-prod
+      pause_status: PAUSED
+
+resources:
+  jobs:
+    hc_medallion:
+      name: hc-medallion-${bundle.target}
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: "0 30 6 * * ?"
+        timezone_id: America/Chicago
+        pause_status: ${var.pause_status}
+      job_clusters:
+        - job_cluster_key: hc_shared
+          new_cluster:
+            spark_version: 15.4.x-scala2.12
+            node_type_id: Standard_DS3_v2
+            num_workers: 2
+            data_security_mode: USER_ISOLATION
+            spark_env_vars:
+              HC_STORAGE_MODE: adls
+              HC_CATALOG_MODE: unity
+              HC_CATALOG_NAME: ${var.catalog}
+              HC_SECRET_MODE: databricks
+      tasks:
+        - task_key: bronze_medical
+          job_cluster_key: hc_shared
+          notebook_task:
+            notebook_path: ./notebooks/01_bronze_autoloader.py
+            base_parameters:
+              environment: ${var.environment}
+              entity: medical_claims
+        - task_key: bronze_pharmacy
+          job_cluster_key: hc_shared
+          notebook_task:
+            notebook_path: ./notebooks/01_bronze_autoloader.py
+            base_parameters:
+              environment: ${var.environment}
+              entity: pharmacy_claims
+        - task_key: silver_gold
+          depends_on:
+            - task_key: bronze_medical
+            - task_key: bronze_pharmacy
+          job_cluster_key: hc_shared
+          notebook_task:
+            notebook_path: ./notebooks/02_silver_gold.py
+            base_parameters:
+              environment: ${var.environment}
+              fail_after: ""
+      email_notifications:
+        on_failure:
+          - ${var.alert_email}
+
+  pipelines:
+    hc_dlt_claims:
+      name: hc-dlt-claims-${bundle.target}
+      catalog: ${var.catalog}
+      schema: silver
+      serverless: true
+      libraries:
+        - file:
+            path: ./dlt/claims_dlt_pipeline.py
+      configuration:
+        hc.catalog: ${var.catalog}
+        hc.environment: ${var.environment}

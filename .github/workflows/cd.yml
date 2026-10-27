@@ -1,0 +1,113 @@
+name: CD
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - prod
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-dev:
+    name: Deploy dev
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'dev' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          if [ -z "$AZURE_CLIENT_ID" ] || [ -z "$DATABRICKS_HOST" ] || [ -z "$DATABRICKS_TOKEN" ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Azure or Databricks secrets are not configured. Skipping dev deployment."
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Azure login and Bicep what-if
+        if: steps.gate.outputs.deploy == 'true'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Bicep deployment
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          az group create --name rg-hc-claims-dev --location eastus
+          az deployment group create \
+            --resource-group rg-hc-claims-dev \
+            --template-file infra/main.bicep \
+            --parameters infra/parameters/dev.bicepparam
+
+      - name: Databricks Asset Bundle
+        if: steps.gate.outputs.deploy == 'true'
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+          databricks bundle validate -t dev
+          databricks bundle deploy -t dev
+
+  deploy-prod:
+    name: Deploy prod
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'prod'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_PROD }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_PROD }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_PROD }}
+        run: |
+          if [ -z "$AZURE_CLIENT_ID" ] || [ -z "$DATABRICKS_HOST" ] || [ -z "$DATABRICKS_TOKEN" ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Prod Azure or Databricks secrets are not configured. Skipping prod deployment."
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Azure login
+        if: steps.gate.outputs.deploy == 'true'
+        uses: azure/login@v2
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID_PROD }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET_PROD }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
+      - name: Bicep deployment
+        if: steps.gate.outputs.deploy == 'true'
+        run: |
+          az group create --name rg-hc-claims-prod --location eastus
+          az deployment group create \
+            --resource-group rg-hc-claims-prod \
+            --template-file infra/main.bicep \
+            --parameters infra/parameters/prod.bicepparam
+
+      - name: Databricks Asset Bundle
+        if: steps.gate.outputs.deploy == 'true'
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST_PROD }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN_PROD }}
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+          databricks bundle validate -t prod
+          databricks bundle deploy -t prod

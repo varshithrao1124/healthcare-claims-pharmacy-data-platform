@@ -1,0 +1,25 @@
+source_row_num,provider_npi,provider_name,specialty,taxonomy_code,network_status,credential_status,city,state,postal_code
+1,1764480624,"Fowler DO, Family",Family Medicine,207Q00000X,OUT,Active,Austin,TX,78701
+2,1597777519,"Johnson MD, Internal",Internal Medicine,207R00000X,IN,Active,Houston,TX,77002
+3,2453197644,"Hill MD, Cardiology",Cardiology,207RC0000X,IN,Active,Dallas,TX,75201
+4,2544205802,"Walker MD, Endocrinology",Endocrinology,207RE0101X,IN,Active,Los Angeles,CA,90012
+5,2826177307,"Doyle MD, Oncology",Oncology,207RX0202X,IN,Active,San Diego,CA,92101
+6,2486771340,"Rhodes DO, Orthopedics",Orthopedics,207X00000X,OUT,Active,Miami,FL,33130
+7,1051769739,"Mcclain MD, Pediatrics",Pediatrics,208000000X,IN,Active,Orlando,FL,32801
+8,2439304710,"Miller MD, Psychiatry",Psychiatry,2084P0800X,IN,Active,New York,NY,10001
+9,1164325692,"Henderson MD, Pulmonology",Pulmonology,207RP1001X,IN,Active,Buffalo,NY,14201
+10,1186703785,"Johnson MD, Gastroenterology",Gastroenterology,207RG0100X,IN,Active,Chicago,IL,60601
+11,1883822664,"Robinson DO, Family",Family Medicine,207Q00000X,OUT,Active,Columbus,OH,43215
+12,1818077764,"Wagner MD, Internal",Internal Medicine,207R00000X,IN,Active,Philadelphia,PA,19103
+13,1727545505,"Johnson MD, Cardiology",Cardiology,207RC0000X,IN,Active,Atlanta,GA,30303
+14,1214664850,"Gonzalez MD, Endocrinology",Endocrinology,207RE0101X,IN,Active,Austin,TX,78701
+15,1756550574,"Santos MD, Oncology",Oncology,207RX0202X,IN,Active,Houston,TX,77002
+16,1603492244,"Gardner DO, Orthopedics",Orthopedics,207X00000X,OUT,Active,Dallas,TX,75201
+17,2802808297,"Robinson MD, Pediatrics",Pediatrics,208000000X,IN,Active,Los Angeles,CA,90012
+18,1461557963,"Lawrence MD, Psychiatry",Psychiatry,2084P0800X,IN,Active,San Diego,CA,92101
+19,1448313019,"Pacheco MD, Pulmonology",Pulmonology,207RP1001X,IN,Active,Miami,FL,33130
+20,1776471959,"Smith MD, Gastroenterology",Gastroenterology,207RG0100X,IN,Active,Orlando,FL,32801
+21,2146441326,"Shaffer DO, Family",Family Medicine,207Q00000X,OUT,Active,New York,NY,10001
+22,1666390319,"Wolfe MD, Internal",Internal Medicine,207R00000X,IN,Active,Buffalo,NY,14201
+23,1939464271,"Peterson MD, Cardiology",Cardiology,207RC0000X,IN,Active,Chicago,IL,60601
+24,2272774722,"Moore MD, Endocrinology",Endocrinology,207RE0101X,IN,Active,Columbus,OH,43215
