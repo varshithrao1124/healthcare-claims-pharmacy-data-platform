@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <rect width="1400" height="820" fill="#f7f9fb"/>
+  <text x="40" y="48" font-family="sans-serif" font-size="22" fill="#102a43">Healthcare claims medallion — local path and Azure path</text>
+  <text x="40" y="76" font-family="sans-serif" font-size="14" fill="#486581">Solid flow runs locally and in CI. The lower row is deploy-ready and was not executed against Azure.</text>
+  <g font-family="sans-serif" font-size="14" fill="#102a43">
+    <rect x="40" y="120" width="220" height="80" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="150" y="155" text-anchor="middle">Synthetic generator</text>
+    <text x="150" y="175" text-anchor="middle">seeded CSV batches</text>
+    <rect x="300" y="120" width="230" height="80" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="415" y="155" text-anchor="middle">Landing zone</text>
+    <text x="415" y="175" text-anchor="middle">batch_date partitions</text>
+    <rect x="580" y="90" width="250" height="70" rx="8" fill="#fff3e0" stroke="#1f4e79"/>
+    <text x="705" y="130" text-anchor="middle">Bronze Delta</text>
+    <rect x="580" y="190" width="250" height="70" rx="8" fill="#e8f5e9" stroke="#1f4e79"/>
+    <text x="705" y="230" text-anchor="middle">Silver Delta (DQ, SCD2, MERGE)</text>
+    <rect x="580" y="290" width="250" height="70" rx="8" fill="#f3e5f5" stroke="#1f4e79"/>
+    <text x="705" y="330" text-anchor="middle">Gold star schema</text>
+    <rect x="880" y="150" width="250" height="80" rx="8" fill="#fce4ec" stroke="#1f4e79"/>
+    <text x="1005" y="185" text-anchor="middle">Audit and reconciliation</text>
+    <text x="1005" y="205" text-anchor="middle">runs, DQ, alerts</text>
+    <rect x="880" y="290" width="220" height="70" rx="8" fill="#ede7f6" stroke="#1f4e79"/>
+    <text x="990" y="330" text-anchor="middle">Local Streamlit dashboard</text>
+    <rect x="1140" y="290" width="210" height="70" rx="8" fill="#ede7f6" stroke="#1f4e79"/>
+    <text x="1245" y="330" text-anchor="middle">Power BI (design)</text>
+    <rect x="40" y="500" width="280" height="100" rx="8" fill="#eceff1" stroke="#1f4e79"/>
+    <text x="180" y="545" text-anchor="middle">ADF copy to ADLS raw</text>
+    <text x="180" y="565" text-anchor="middle">Key Vault linked service</text>
+    <rect x="360" y="500" width="280" height="100" rx="8" fill="#eceff1" stroke="#1f4e79"/>
+    <text x="500" y="545" text-anchor="middle">Databricks Auto Loader</text>
+    <text x="500" y="565" text-anchor="middle">cloudFiles, rescued data</text>
+    <rect x="680" y="500" width="300" height="100" rx="8" fill="#eceff1" stroke="#1f4e79"/>
+    <text x="830" y="545" text-anchor="middle">Lakeflow / DLT expectations</text>
+    <text x="830" y="565" text-anchor="middle">alternate Silver path</text>
+    <rect x="1020" y="500" width="320" height="100" rx="8" fill="#eceff1" stroke="#1f4e79"/>
+    <text x="1180" y="545" text-anchor="middle">Unity Catalog, Bicep,</text>
+    <text x="1180" y="565" text-anchor="middle">Asset Bundle, GitHub CD</text>
+  </g>
+  <g stroke="#486581" stroke-width="2" fill="none">
+    <line x1="260" y1="160" x2="300" y2="160"/>
+    <line x1="530" y1="160" x2="580" y2="125"/>
+    <line x1="705" y1="160" x2="705" y2="190"/>
+    <line x1="705" y1="260" x2="705" y2="290"/>
+    <line x1="830" y1="125" x2="880" y2="180"/>
+    <line x1="830" y1="225" x2="880" y2="200"/>
+    <line x1="830" y1="325" x2="880" y2="325"/>
+    <line x1="1100" y1="325" x2="1140" y2="325"/>
+    <line x1="320" y1="550" x2="360" y2="550"/>
+    <line x1="640" y1="550" x2="680" y2="550"/>
+    <line x1="980" y1="550" x2="1020" y2="550"/>
+  </g>
+</svg>

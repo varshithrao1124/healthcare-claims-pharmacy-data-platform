@@ -1,0 +1,116 @@
+{
+  "name": "PL_Ingest_Landing_To_Raw",
+  "properties": {
+    "description": "Copy one daily batch from the source landing zone into the raw ADLS path, then start the Databricks medallion job.",
+    "parameters": {
+      "batchDate": { "type": "String" },
+      "storageAccount": { "type": "String", "defaultValue": "sthcclaimsdev" },
+      "sourceContainer": { "type": "String", "defaultValue": "source-landing" },
+      "rawContainer": { "type": "String", "defaultValue": "claims" },
+      "databricksJobId": { "type": "String" },
+      "databricksWorkspaceUrl": { "type": "String" },
+      "databricksClusterId": { "type": "String" }
+    },
+    "variables": {
+      "entities": {
+        "type": "Array",
+        "defaultValue": [
+          "members",
+          "providers",
+          "pharmacies",
+          "drugs",
+          "drug_pricing",
+          "prescriptions",
+          "medical_claims",
+          "pharmacy_claims",
+          "remittances"
+        ]
+      }
+    },
+    "activities": [
+      {
+        "name": "ForEachEntity",
+        "type": "ForEach",
+        "dependsOn": [],
+        "typeProperties": {
+          "items": {
+            "value": "@variables('entities')",
+            "type": "Expression"
+          },
+          "isSequential": false,
+          "batchCount": 4,
+          "activities": [
+            {
+              "name": "CopyEntityToRaw",
+              "type": "Copy",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.01:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "DelimitedTextSource",
+                  "storeSettings": { "type": "AzureBlobFSReadSettings", "recursive": false }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "storeSettings": { "type": "AzureBlobFSWriteSettings" }
+                },
+                "enableStaging": false
+              },
+              "inputs": [
+                {
+                  "referenceName": "DS_Landing_Delimited",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "storageAccount": "@pipeline().parameters.storageAccount",
+                    "container": "@pipeline().parameters.sourceContainer",
+                    "folder": "@concat('batch_date=', pipeline().parameters.batchDate)",
+                    "fileName": "@concat(item(), '.csv')"
+                  }
+                }
+              ],
+              "outputs": [
+                {
+                  "referenceName": "DS_Raw_Delimited",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "storageAccount": "@pipeline().parameters.storageAccount",
+                    "container": "@pipeline().parameters.rawContainer",
+                    "batchDate": "@pipeline().parameters.batchDate",
+                    "entity": "@item()"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "RunMedallionJob",
+        "type": "DatabricksJob",
+        "dependsOn": [
+          { "activity": "ForEachEntity", "dependencyConditions": ["Succeeded"] }
+        ],
+        "policy": { "timeout": "0.04:00:00", "retry": 1, "retryIntervalInSeconds": 60 },
+        "typeProperties": {
+          "jobId": {
+            "value": "@pipeline().parameters.databricksJobId",
+            "type": "Expression"
+          }
+        },
+        "linkedServiceName": {
+          "referenceName": "LS_Databricks",
+          "type": "LinkedServiceReference",
+          "parameters": {
+            "workspaceUrl": "@pipeline().parameters.databricksWorkspaceUrl",
+            "clusterId": "@pipeline().parameters.databricksClusterId"
+          }
+        }
+      }
+    ],
+    "annotations": ["medallion", "claims"]
+  }
+}

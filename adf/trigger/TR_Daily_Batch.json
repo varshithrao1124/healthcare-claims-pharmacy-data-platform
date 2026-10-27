@@ -1,0 +1,26 @@
+{
+  "name": "TR_Daily_Batch",
+  "properties": {
+    "description": "Tumbling window supplies batchDate from the window start, in America/Chicago.",
+    "annotations": [],
+    "type": "TumblingWindowTrigger",
+    "pipeline": {
+      "pipelineReference": {
+        "referenceName": "PL_Ingest_Landing_To_Raw",
+        "type": "PipelineReference"
+      },
+      "parameters": {
+        "batchDate": "@formatDateTime(trigger().outputs.windowStartTime, 'yyyy-MM-dd')"
+      }
+    },
+    "typeProperties": {
+      "frequency": "Hour",
+      "interval": 24,
+      "startTime": "2024-06-03T11:00:00Z",
+      "delay": "00:15:00",
+      "maxConcurrency": 1,
+      "retryPolicy": { "count": 2, "intervalInSeconds": 300 }
+    },
+    "runtimeState": "Stopped"
+  }
+}

@@ -1,0 +1,21 @@
+source_row_num,ndc,drug_name,generic_name,brand_generic_flag,therapeutic_class,dosage_form,strength,route,manufacturer
+1,00069015001,Atorvastatin,Atorvastatin Calcium,G,Cardiovascular - Statin,Tablet,20 mg,Oral,Northwind Generics
+2,00002143301,Rosuvastatin,Rosuvastatin Calcium,G,Cardiovascular - Statin,Tablet,10 mg,Oral,Northwind Generics
+3,00378018001,Lisinopril,Lisinopril,G,Cardiovascular - ACE Inhibitor,Tablet,10 mg,Oral,Northwind Generics
+4,00071015523,Metformin,Metformin HCl,G,Antidiabetic,Tablet,500 mg,Oral,Northwind Generics
+5,00169368012,Insulin Glargine,Insulin Glargine,B,Antidiabetic,Injection,100 unit/mL,Subcutaneous,EndoPrime
+6,00597015290,Metoprolol Succinate,Metoprolol Succinate,G,Cardiovascular - Beta Blocker,Tablet,50 mg,Oral,Northwind Generics
+7,00093071801,Amlodipine,Amlodipine Besylate,G,Cardiovascular - CCB,Tablet,5 mg,Oral,Northwind Generics
+8,00378400301,Losartan,Losartan Potassium,G,Cardiovascular - ARB,Tablet,50 mg,Oral,Northwind Generics
+9,00054418425,Levothyroxine,Levothyroxine Sodium,G,Thyroid,Tablet,50 mcg,Oral,Northwind Generics
+10,00009002901,Albuterol HFA,Albuterol Sulfate,B,Respiratory,Inhaler,90 mcg,Inhalation,AeroHealth
+11,00591040701,Montelukast,Montelukast Sodium,G,Respiratory,Tablet,10 mg,Oral,Northwind Generics
+12,00006074031,Fluticasone Nasal,Fluticasone Propionate,B,Respiratory,Spray,50 mcg,Nasal,AeroHealth
+13,00378020301,Sertraline,Sertraline HCl,G,Behavioral Health,Tablet,50 mg,Oral,Northwind Generics
+14,00049049030,Escitalopram,Escitalopram Oxalate,G,Behavioral Health,Tablet,10 mg,Oral,Northwind Generics
+15,00591551201,Bupropion XL,Bupropion HCl,G,Behavioral Health,Tablet,150 mg,Oral,Northwind Generics
+16,00074379990,Adalimumab,Adalimumab,B,Specialty Immunology,Injection,40 mg/0.4 mL,Subcutaneous,Immunexis
+17,00069018901,Apixaban,Apixaban,B,Anticoagulant,Tablet,5 mg,Oral,CardiaNova
+18,00597008001,Omeprazole,Omeprazole,G,Gastrointestinal,Capsule,20 mg,Oral,Northwind Generics
+19,00093031001,Gabapentin,Gabapentin,G,Neurology,Capsule,300 mg,Oral,Northwind Generics
+20,00406012301,Hydrocodone/APAP,Hydrocodone-Acetaminophen,G,Pain,Tablet,5-325 mg,Oral,Northwind Generics

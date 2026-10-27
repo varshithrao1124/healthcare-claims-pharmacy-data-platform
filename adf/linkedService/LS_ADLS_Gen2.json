@@ -1,0 +1,25 @@
+{
+  "name": "LS_ADLS_Gen2",
+  "properties": {
+    "description": "ADLS Gen2 claims lake. The factory managed identity is granted Storage Blob Data Contributor by infra/main.bicep.",
+    "annotations": [],
+    "type": "AzureBlobFS",
+    "typeProperties": {
+      "url": "https://@{linkedService().storageAccount}.dfs.core.windows.net",
+      "accountKey": {
+        "type": "AzureKeyVaultSecret",
+        "store": {
+          "referenceName": "LS_KeyVault",
+          "type": "LinkedServiceReference"
+        },
+        "secretName": "adls-account-key"
+      }
+    },
+    "parameters": {
+      "storageAccount": {
+        "type": "String",
+        "defaultValue": "sthcclaimsdev"
+      }
+    }
+  }
+}

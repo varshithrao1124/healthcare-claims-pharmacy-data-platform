@@ -1,0 +1,28 @@
+{
+  "name": "LS_Databricks",
+  "properties": {
+    "description": "Databricks workspace. The token is read from Key Vault at runtime.",
+    "annotations": [],
+    "type": "AzureDatabricks",
+    "typeProperties": {
+      "domain": "@{linkedService().workspaceUrl}",
+      "accessToken": {
+        "type": "AzureKeyVaultSecret",
+        "store": {
+          "referenceName": "LS_KeyVault",
+          "type": "LinkedServiceReference"
+        },
+        "secretName": "databricks-token"
+      },
+      "existingClusterId": "@{linkedService().clusterId}"
+    },
+    "parameters": {
+      "workspaceUrl": {
+        "type": "String"
+      },
+      "clusterId": {
+        "type": "String"
+      }
+    }
+  }
+}

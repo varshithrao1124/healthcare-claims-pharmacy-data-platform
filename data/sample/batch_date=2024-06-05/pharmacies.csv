@@ -1,0 +1,12 @@
+source_row_num,pharmacy_npi,ncpdp_id,pharmacy_name,chain_name,pharmacy_type,network_tier,city,state,postal_code
+1,1049147279,1000000,Harborlight Pharmacy,Harborlight,Retail,Standard,Austin,TX,78701
+2,1855148072,1000001,MetroCare Pharmacy,MetroCare,Retail,Preferred,Los Angeles,CA,90012
+3,1764361501,1000002,Capitol Drug,Capitol,Retail,Standard,Orlando,FL,32801
+4,2607470145,1000003,Lakeside Apothecary,Lakeside,Retail,Standard,Chicago,IL,60601
+5,1361611571,1000004,Prairie Mail Pharmacy,Prairie Mail,Mail,Preferred,Atlanta,GA,30303
+6,1299543656,1000005,Summit Specialty Pharmacy,Summit Specialty,Specialty,Preferred,Dallas,TX,75201
+7,1019444706,1000006,Redbird Community Pharmacy,Redbird,Retail,Standard,Miami,FL,33130
+8,1246449155,1000007,Northwind Pharmacy,Northwind,Retail,Out,Buffalo,NY,14201
+9,2482935584,1000008,Bayou Health Pharmacy,Bayou Health,Retail,Preferred,Philadelphia,PA,19103
+10,1203808518,1000009,Ironwood Mail Order,Ironwood,Mail,Standard,Houston,TX,77002
+11,12,0000001,,Bad Chain,Retail,Preferred,Austin,TX,78701

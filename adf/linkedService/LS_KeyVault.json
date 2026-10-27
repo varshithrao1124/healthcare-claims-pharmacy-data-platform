@@ -1,0 +1,17 @@
+{
+  "name": "LS_KeyVault",
+  "properties": {
+    "description": "Key Vault that holds the ADLS account key and the Databricks PAT used by the job activity.",
+    "annotations": [],
+    "type": "AzureKeyVault",
+    "typeProperties": {
+      "baseUrl": "@{linkedService().vaultUrl}"
+    },
+    "parameters": {
+      "vaultUrl": {
+        "type": "String",
+        "defaultValue": "https://kv-hc-claims-dev.vault.azure.net/"
+      }
+    }
+  }
+}

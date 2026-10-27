@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hc-platform"
+version = "1.0.0"
+description = "Healthcare claims and pharmacy analytics platform (Azure-ready, locally executable)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Healthcare Data Engineering" }]
+
+[project.scripts]
+hc-platform = "hc_platform.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests", "dashboard"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"dlt/*" = ["F401"]
+"notebooks/*" = ["F401"]
+"dashboard/app.py" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+source = ["hc_platform"]
+omit = ["*/cli.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true

@@ -218,3 +218,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local lake, logs, and Spark scratch. Sample landing files under data/sample are committed.
+data/lake/
+data/lake-test/
+data/logs/
+data/logs-test/
+data/landing/
+data/dashboard_cache/
+spark-warehouse/
+metastore_db/
+derby.log
+*.log
+
+# Generated evidence scratch that is not a committed screenshot
+docs/run_output/*.json
+!docs/run_output/.gitkeep

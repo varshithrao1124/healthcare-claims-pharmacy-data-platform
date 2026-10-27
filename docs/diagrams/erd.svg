@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <rect width="1400" height="760" fill="#f7f9fb"/>
+  <text x="40" y="48" font-family="sans-serif" font-size="22" fill="#102a43">Gold star schema</text>
+  <g font-family="sans-serif" font-size="14" fill="#102a43">
+    <rect x="40" y="90" width="200" height="90" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="140" y="130" text-anchor="middle">dim_member</text>
+    <text x="140" y="150" text-anchor="middle">PK member_id</text>
+    <rect x="280" y="90" width="220" height="110" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="390" y="125" text-anchor="middle">dim_provider</text>
+    <text x="390" y="145" text-anchor="middle">PK provider_npi</text>
+    <text x="390" y="165" text-anchor="middle">SCD2 history</text>
+    <rect x="540" y="90" width="220" height="110" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="650" y="125" text-anchor="middle">dim_pharmacy</text>
+    <text x="650" y="145" text-anchor="middle">PK pharmacy_npi</text>
+    <text x="650" y="165" text-anchor="middle">SCD2 history</text>
+    <rect x="800" y="90" width="180" height="90" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="890" y="130" text-anchor="middle">dim_drug</text>
+    <text x="890" y="150" text-anchor="middle">PK ndc</text>
+    <rect x="1020" y="90" width="240" height="110" rx="8" fill="#e3f2fd" stroke="#1f4e79"/>
+    <text x="1140" y="125" text-anchor="middle">dim_drug_pricing</text>
+    <text x="1140" y="145" text-anchor="middle">PK ndc + price_type</text>
+    <text x="1140" y="165" text-anchor="middle">SCD2 AWP/WAC/MAC</text>
+    <rect x="80" y="460" width="420" height="140" rx="8" fill="#fff3e0" stroke="#1f4e79"/>
+    <text x="290" y="510" text-anchor="middle">fact_medical_claim</text>
+    <text x="290" y="535" text-anchor="middle">grain: claim_id + claim_line_number</text>
+    <text x="290" y="555" text-anchor="middle">FK member_id, billing/rendering NPI</text>
+    <rect x="540" y="460" width="480" height="160" rx="8" fill="#e8f5e9" stroke="#1f4e79"/>
+    <text x="780" y="510" text-anchor="middle">fact_pharmacy_claim</text>
+    <text x="780" y="535" text-anchor="middle">grain: claim_id + claim_line_number</text>
+    <text x="780" y="555" text-anchor="middle">FK member, pharmacy, prescriber, ndc</text>
+    <text x="780" y="575" text-anchor="middle">contracted price and variance</text>
+    <rect x="1060" y="460" width="290" height="160" rx="8" fill="#f3e5f5" stroke="#1f4e79"/>
+    <text x="1205" y="500" text-anchor="middle">Aggregate marts</text>
+    <text x="1205" y="525" text-anchor="middle">fact_pmpm</text>
+    <text x="1205" y="545" text-anchor="middle">fact_denial_*</text>
+    <text x="1205" y="565" text-anchor="middle">fact_generic_dispensing</text>
+    <text x="1205" y="585" text-anchor="middle">fact_top_drugs, variance</text>
+  </g>
+</svg>
